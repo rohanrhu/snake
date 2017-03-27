@@ -72,10 +72,10 @@ SnakeGame.Snake = function () {
     };
     t_Snake.ss = [
         ['r', 5],
-        ['d', 10],
+        ['d', 8],
         ['l', 3],
         ['d', 4],
-        ['r', 10]
+        ['r', 8]
     ];
     t_Snake.points_factor = 10;
     t_Snake.points = 0;
@@ -88,8 +88,8 @@ SnakeGame.Snake.prototype.init = function () {
     this.snline = new PIXI.Graphics();
     this.game.app.stage.addChild(this.snline);
 
-    this.x = 100;
-    this.y = 100;
+    this.x = 50;
+    this.y = 50;
 };
 
 SnakeGame.Snake.prototype.rotate = function (rotation) {
@@ -497,6 +497,10 @@ var Game = function (parameters) {
     };
 
     var handler = function (event) {
+        if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+            event.preventDefault();
+        }
+
         if (event.keyCode == 37) { // LEFT
             t_Game.snake.rotate('l');
         } else if (event.keyCode == 39) { // RIGHT
@@ -527,6 +531,18 @@ var Game = function (parameters) {
     if (parent && inIframe()) {
         parent.window.addEventListener('keydown', handler);
     }
+
+    t_Game.app.renderer.view.addEventListener('touchstart', function (event) {
+        if (t_Game.snake.d == 'l') {
+            t_Game.snake.rotate('u');
+        } else if (t_Game.snake.d == 'r') {
+            t_Game.snake.rotate('d');
+        } else if (t_Game.snake.d == 'd') {
+            t_Game.snake.rotate('l');
+        } else if (t_Game.snake.d == 'u') {
+            t_Game.snake.rotate('r');
+        }
+    }, false);
 };
 
 function randomInt(min, max) {

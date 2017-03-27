@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 
     <meta name=description content="Snake game.">
-    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name=viewport content="width=device-width; initial-scale=1;  maximum-scale=1.0; user-scalable=0;">
     
     <link href="https://fonts.googleapis.com/css?family=Londrina+Solid|VT323" rel="stylesheet">
 
@@ -82,7 +82,44 @@
         .footer .a {
             color: #6ce06f;
         }
+
+        @media screen and (max-width: 450px) {
+            .logo {
+                font-size: 30px;
+                margin-top: 15px;
+            }
+
+            .description {
+                font-size: 20px;
+            }
+
+            .link {
+                font-size: 15px;
+            }
+        }
     </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var gameIframe = document.getElementById('gameIframe');
+
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            
+            if (h < 800) {
+                gameIframe.width = 500;
+                gameIframe.height = 300;
+            }
+
+            if (w <= 770) {
+                gameIframe.width = 600;
+            }
+
+            if (w <= 600) {
+                gameIframe.width = 275;
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="logo">
@@ -97,7 +134,7 @@
     </div>
     <div class="clear"></div>
     <div class="game">
-        <iframe src="game.html" class="gameIframe" width="800" height="600"></iframe>
+        <iframe src="game.html" id="gameIframe" class="gameIframe" width="800" height="600"></iframe>
     </div>
     <div class="footer">
         Licensed under <a class="a" href="https://opensource.org/licenses/MIT" title="MIT License">MIT</a>.
