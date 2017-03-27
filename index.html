@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+
+    <meta name=description content="Snake game.">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    
+    <link href="https://fonts.googleapis.com/css?family=Londrina+Solid|VT323" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+
+    <title>Snake - Game</title>
+
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            text-align: center;
+            background: #245425;
+            color: #fafafa;
+        }
+
+        .game {
+            margin-top: 25px;
+            display: inline-block;
+            border: 10px solid #378239;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px 0px rgba(5, 53, 6, 0.4);
+        }
+    
+        .gameIframe {
+            border: 0px;
+            display: block;
+            margin: auto;
+        }
+
+        .logo {
+            font-family: 'Londrina Solid', cursive;
+            font-size: 50px;
+            margin-top: 25px;
+            text-shadow: 0px 0px 10px rgba(5, 53, 6, 0.56);
+        }
+
+        .description {
+            font-family: 'Londrina Solid', cursive;
+            font-size: 25px;
+            text-shadow: 0px 0px 10px rgba(5, 53, 6, 0.56);
+        }
+
+        .link {
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            margin-top: 10px;
+            display: inline-block;
+            border: 1px solid #378239;
+            background: #306b32;
+            border-radius: 2px;
+            padding: 5px 10px;
+        }
+
+        .a,
+        .a:visited {
+            color: #fafafa;
+            transition: opacity 250ms;
+            text-decoration: none;
+        }
+
+        .a:hover {
+            opacity: 0.8;
+        }
+
+        .footer {
+            font-family: 'Arial';
+            font-size: 13px;
+            margin-top: 25px;
+        }
+
+        .footer .a {
+            color: #6ce06f;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        snake
+    </div>
+    <div class="description">
+        HTML5 SNAKE GAME WITH PIXI.JS
+    </div>
+    <div class="clear"></div>
+    <div class="link">
+        <a class="a" href="http://oguzhaneroglu.com/games/snake/" title="HTML5 Snake Game with pixi.js">http://oguzhaneroglu.com/games/snake/</a>
+    </div>
+    <div class="clear"></div>
+    <div class="game">
+        <iframe src="game.html" class="gameIframe" width="800" height="600"></iframe>
+    </div>
+    <div class="footer">
+        Licensed under <a class="a" href="https://opensource.org/licenses/MIT" title="MIT License">MIT</a>.
+        Copyright &copy; 2017, <a class="a" href="http://oguzhaneroglu.com/" title="Oğuzhan Eroğlu, Software Engineer">Oğuzhan Eroğlu</a>.
+    </div>
+    <a href="https://github.com/rohanrhu/snake" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+</body>
+</html>
