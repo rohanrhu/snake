@@ -19,6 +19,12 @@ SnakeGame.Game = function (parameters) {
     this.x = 0;
     this.y = 0;
 
+    this.meal_color = {
+        r: 255,
+        g: 255,
+        b: 255
+    };
+
     this.snake = null;
 
     this.meals = [];
@@ -32,8 +38,13 @@ SnakeGame.Game.prototype.setSnake = function (snake) {
 SnakeGame.Game.prototype.step = function (parameters) {
     var t_Game = this;
 
+    this.meal_color.r = parseInt(((Math.sin(Math.PI * 2 * (new Date).getTime() / 1000) + 1) / 2) * 255);
+    this.meal_color.g = parseInt(((Math.cos(Math.PI * 2 * (new Date).getTime() / 1000) + 1) / 2) * 255);
+    this.meal_color.b = parseInt((Math.cos(Math.PI * 2 * (new Date).getTime() / 1000) + 0.5) * 255);
+
     t_Game.meals.forEach(function (m, mi) {
         m.meal.clear();
+        m.meal.beginFill(rgbToHex(t_Game.meal_color.r, t_Game.meal_color.g, t_Game.meal_color.b));
         m.meal.drawRect(m.x, m.y, t_Game.snake.length, t_Game.snake.length);
     });
 };
@@ -42,8 +53,6 @@ SnakeGame.Game.prototype.placeMeals = function () {
     if (this.meals.length < 1) {
         var meal = new PIXI.Graphics();
         this.app.stage.addChild(meal);
-
-        meal.beginFill(0x2060C6);
 
         this.meals.push({
             x: randomInt(15, this.app.renderer.view.width) - 15,
@@ -63,6 +72,7 @@ SnakeGame.Snake = function () {
     t_Snake.piece_size = 20;
     t_Snake.ep = null;
     t_Snake.addition = 0.2;
+    t_Snake.wa = 0;
     t_Snake.d = null;
     t_Snake.rds = {
         'l': 'r',
@@ -82,6 +92,17 @@ SnakeGame.Snake = function () {
     t_Snake.ss.forEach(function (s, i) {
         t_Snake.points += s[1]*t_Snake.points_factor;
     });
+
+    this.default_color = {
+        r: 55,
+        g: 130,
+        b: 57
+    };
+    this.color = {
+        r: this.default_color.r,
+        g: this.default_color.g,
+        b: this.default_color.b
+    };
 };
 
 SnakeGame.Snake.prototype.init = function () {
@@ -229,18 +250,9 @@ SnakeGame.Snake.prototype.mealCollision = function (parameters) {
                 ls = t_Snake.ss[0];
             }
 
-            t_Snake.addition += 0.05;
-            t_Snake.ss.unshift([ls[0], 5]);
+            t_Snake.addition += 0.01;
 
-            if (t_Snake.ss[0][0] == 'l') {
-                t_Snake.x += t_Snake.length*5;
-            } else if (t_Snake.ss[0][0] == 'r') {
-                t_Snake.x -= t_Snake.length*5;
-            } else if (t_Snake.ss[0][0] == 'u') {
-                t_Snake.y += t_Snake.length*5;
-            } else if (t_Snake.ss[0][0] == 'd') {
-                t_Snake.y -= t_Snake.length*5;
-            }
+            t_Snake.wa += 5;
 
             t_Snake.points += t_Snake.length*5;
 
@@ -261,7 +273,7 @@ SnakeGame.Snake.prototype.step = function (parameters) {
     t_Snake.snline.y = t_Snake.y;
 
     t_Snake.snline.moveTo(0, 0);
-    t_Snake.snline.lineStyle(t_Snake.length, 0x157518, 1);
+    t_Snake.snline.lineStyle(t_Snake.length, rgbToHex(t_Snake.color.r, t_Snake.color.g, t_Snake.color.b), 1);
 
     var rx = 0;
     var ry = 0;
@@ -290,6 +302,22 @@ SnakeGame.Snake.prototype.step = function (parameters) {
     var a = t_Snake.addition*parameters.delta;
 
     var decr = function (i, d) {
+        if (t_Snake.wa > 0) {
+            t_Snake.color.r = parseInt(((Math.sin(Math.PI * 2 * (new Date).getTime() / 1000) + 1) / 2) * 255);
+            t_Snake.color.g = parseInt(((Math.cos(Math.PI * 2 * (new Date).getTime() / 1000) + 1) / 2) * 255);
+            t_Snake.color.b = parseInt((Math.cos(Math.PI * 2 * (new Date).getTime() / 1000) + 0.5) * 255);
+
+            t_Snake.wa -= d;
+            return;
+        } else {
+            t_Snake.color = {
+                r: t_Snake.default_color.r,
+                g: t_Snake.default_color.g,
+                b: t_Snake.default_color.b
+            };
+            t_Snake.wa = 0;
+        }
+
         if (i > t_Snake.ss.length-1) {
             return;
         }
@@ -555,4 +583,8 @@ function inIframe() {
     } catch (e) {
         return true;
     }
+}
+
+function rgbToHex(r, g, b) {
+    return parseInt("0x" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1));
 }
